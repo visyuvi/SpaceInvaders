@@ -1,6 +1,7 @@
 import pygame.sprite
 from constants import *
 from bullet import Bullet
+from explosion import Explosion
 
 
 class Spaceship(pygame.sprite.Sprite):
@@ -15,7 +16,7 @@ class Spaceship(pygame.sprite.Sprite):
         # update mask to ignore anything that is transparent
         self.mask = pygame.mask.from_surface(self.image)
 
-    def update(self, screen, bullet_group):
+    def update(self, screen, bullet_group, explosion_group):
         # set movement speed
         speed = 8
 
@@ -43,3 +44,7 @@ class Spaceship(pygame.sprite.Sprite):
             pygame.draw.rect(screen, green,
                              (self.rect.x, (self.rect.bottom + 10),
                               self.rect.width * self.health_remaining / self.health_start, 15))
+        elif self.health_remaining <= 0:
+            explosion = Explosion(self.rect.centerx, self.rect.centery, 2)
+            explosion_group.add(explosion)
+            self.kill()

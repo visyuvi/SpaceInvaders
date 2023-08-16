@@ -1,4 +1,5 @@
 import pygame.sprite
+from explosion import Explosion
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -8,9 +9,12 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    def update(self, alien_group):
+    def update(self, alien_group, explosion_group):
         self.rect.y -= 5
         if self.rect.bottom < 0:
             self.kill()
         if pygame.sprite.spritecollide(self, alien_group, True):
             self.kill()
+            explosion = Explosion(self.rect.centerx, self.rect.centery, 2)
+            explosion_group.add(explosion)
+

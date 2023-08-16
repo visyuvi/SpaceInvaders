@@ -5,6 +5,7 @@ from spaceship import Spaceship
 from constants import *
 from aliens import Aliens
 from alien_bullets import AlienBullet
+
 # define fps
 clock = pygame.time.Clock()
 FPS = 60
@@ -25,6 +26,7 @@ spaceship_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 alien_group = pygame.sprite.Group()
 alien_bullet_group = pygame.sprite.Group()
+explosion_group = pygame.sprite.Group()
 
 
 def create_aliens():
@@ -67,18 +69,20 @@ while run:
             run = False
 
     # update spaceship
-    spaceship.update(screen, bullet_group)
+    spaceship.update(screen, bullet_group, explosion_group)
 
     # update sprite groups
-    bullet_group.update(alien_group)
+    bullet_group.update(alien_group, explosion_group)
     alien_group.update()
-    alien_bullet_group.update(spaceship_group, spaceship)
+    alien_bullet_group.update(spaceship_group, spaceship, explosion_group)
+    explosion_group.update()
 
     # draw sprite groups
     spaceship_group.draw(screen)
     bullet_group.draw(screen)
     alien_group.draw(screen)
     alien_bullet_group.draw(screen)
+    explosion_group.draw(screen)
 
     # update display
     pygame.display.update()

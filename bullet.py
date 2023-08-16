@@ -8,8 +8,9 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    def update(self):
+    def update(self, alien_group):
         self.rect.y -= 5
         if self.rect.bottom < 0:
             self.kill()
-
+        if pygame.sprite.spritecollide(self, alien_group, True):
+            self.kill()

@@ -70,9 +70,9 @@ while run:
     spaceship.update(screen, bullet_group)
 
     # update sprite groups
-    bullet_group.update()
+    bullet_group.update(alien_group)
     alien_group.update()
-    alien_bullet_group.update()
+    alien_bullet_group.update(spaceship_group, spaceship)
 
     # draw sprite groups
     spaceship_group.draw(screen)

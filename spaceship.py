@@ -12,6 +12,8 @@ class Spaceship(pygame.sprite.Sprite):
         self.health_start = health
         self.health_remaining = health
         self.last_shot = pygame.time.get_ticks()
+        # update mask to ignore anything that is transparent
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, screen, bullet_group):
         # set movement speed

@@ -1,8 +1,10 @@
+import random
+
 import pygame
 from spaceship import Spaceship
 from constants import *
 from aliens import Aliens
-
+from alien_bullets import AlienBullet
 # define fps
 clock = pygame.time.Clock()
 FPS = 60
@@ -22,6 +24,7 @@ def draw_bg():
 spaceship_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 alien_group = pygame.sprite.Group()
+alien_bullet_group = pygame.sprite.Group()
 
 
 def create_aliens():
@@ -48,6 +51,16 @@ while run:
     # draw background
     draw_bg()
 
+    # create random alien bullets
+    # record current time
+    time_now = pygame.time.get_ticks()
+    # shoot
+    if time_now - last_alien_shot > bullet_cooldown and len(alien_bullet_group) < 5 and len(alien_group) > 0:
+        attacking_alien = random.choice(alien_group.sprites())
+        alien_bullet = AlienBullet(attacking_alien.rect.centerx, attacking_alien.rect.bottom)
+        alien_bullet_group.add(alien_bullet)
+        last_alien_shot = pygame.time.get_ticks()
+
     # event handlers
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -59,11 +72,14 @@ while run:
     # update sprite groups
     bullet_group.update()
     alien_group.update()
+    alien_bullet_group.update()
 
     # draw sprite groups
     spaceship_group.draw(screen)
     bullet_group.draw(screen)
     alien_group.draw(screen)
+    alien_bullet_group.draw(screen)
+
     # update display
     pygame.display.update()
 

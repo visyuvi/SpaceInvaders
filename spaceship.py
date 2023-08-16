@@ -18,7 +18,7 @@ class Spaceship(pygame.sprite.Sprite):
         speed = 8
 
         # set cooldown variable
-        cooldown = 500  # in milliseconds
+        cooldown = 200  # in milliseconds
 
         # get key press
         key = pygame.key.get_pressed()

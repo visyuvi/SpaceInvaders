@@ -1,5 +1,6 @@
 import pygame
 from spaceship import Spaceship
+from bullet import Bullet
 from constants import *
 
 # define fps
@@ -19,6 +20,7 @@ def draw_bg():
 
 # create sprite groups
 spaceship_group = pygame.sprite.Group()
+bullet_group = pygame.sprite.Group()
 
 
 # create player
@@ -41,10 +43,14 @@ while run:
             run = False
 
     # update spaceship
-    spaceship_group.update(screen)
+    spaceship.update(screen, bullet_group)
 
     # update sprite groups
+    bullet_group.update()
+
+    # draw sprite groups
     spaceship_group.draw(screen)
+    bullet_group.draw(screen)
 
     # update display
     pygame.display.update()

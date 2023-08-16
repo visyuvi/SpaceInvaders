@@ -34,6 +34,7 @@ class Spaceship(pygame.sprite.Sprite):
         time_now = pygame.time.get_ticks()
         # shoot
         if key[pygame.K_SPACE] and time_now - self.last_shot > cooldown:
+            laser_fx.play( )
             bullet = Bullet(self.rect.centerx, self.rect.top)
             bullet_group.add(bullet)
             self.last_shot = pygame.time.get_ticks()
@@ -45,6 +46,6 @@ class Spaceship(pygame.sprite.Sprite):
                              (self.rect.x, (self.rect.bottom + 10),
                               self.rect.width * self.health_remaining / self.health_start, 15))
         elif self.health_remaining <= 0:
-            explosion = Explosion(self.rect.centerx, self.rect.centery, 2)
+            explosion = Explosion(self.rect.centerx, self.rect.centery, 3)
             explosion_group.add(explosion)
             self.kill()

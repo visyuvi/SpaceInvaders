@@ -1,6 +1,7 @@
 import random
 
 import pygame
+from pygame import mixer
 from spaceship import Spaceship
 from constants import *
 from aliens import Aliens
@@ -57,7 +58,7 @@ while run:
     # record current time
     time_now = pygame.time.get_ticks()
     # shoot
-    if time_now - last_alien_shot > bullet_cooldown and len(alien_bullet_group) < 5 and len(alien_group) > 0:
+    if time_now - last_alien_shot > bullet_cooldown and len(alien_group) > 0:
         attacking_alien = random.choice(alien_group.sprites())
         alien_bullet = AlienBullet(attacking_alien.rect.centerx, attacking_alien.rect.bottom)
         alien_bullet_group.add(alien_bullet)

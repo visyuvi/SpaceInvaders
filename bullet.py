@@ -1,5 +1,6 @@
 import pygame.sprite
 from explosion import Explosion
+from constants import *
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -15,6 +16,7 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
         if pygame.sprite.spritecollide(self, alien_group, True):
             self.kill()
+            explosion_fx.play()
             explosion = Explosion(self.rect.centerx, self.rect.centery, 2)
             explosion_group.add(explosion)
 

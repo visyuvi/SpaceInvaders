@@ -17,6 +17,7 @@ class AlienBullet(pygame.sprite.Sprite):
         if pygame.sprite.spritecollide(self, spaceship_group, False, pygame.sprite.collide_mask):
             # reduce spaceship health
             self.kill()
+            explosion2_fx.play()
             spaceship.health_remaining -= 1
             explosion = Explosion(self.rect.centerx, self.rect.centery, 1)
             explosion_group.add(explosion)

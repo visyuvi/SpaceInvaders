@@ -2,6 +2,7 @@ import pygame.sprite
 from constants import *
 from bullet import Bullet
 
+
 class Spaceship(pygame.sprite.Sprite):
     def __init__(self, x, y, health):
         pygame.sprite.Sprite.__init__(self)
@@ -17,7 +18,7 @@ class Spaceship(pygame.sprite.Sprite):
         speed = 8
 
         # set cooldown variable
-        cooldown = 500 # in milliseconds
+        cooldown = 500  # in milliseconds
 
         # get key press
         key = pygame.key.get_pressed()
@@ -39,5 +40,4 @@ class Spaceship(pygame.sprite.Sprite):
         if self.health_remaining > 0:
             pygame.draw.rect(screen, green,
                              (self.rect.x, (self.rect.bottom + 10),
-                              self.rect.width * self.health_remaining/self.health_start, 15))
-
+                              self.rect.width * self.health_remaining / self.health_start, 15))

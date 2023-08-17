@@ -22,6 +22,12 @@ def draw_bg():
     screen.blit(bg, (0, 0))
 
 
+# function for creating text
+def draw_text(text, f, text_col, x, y):
+    img = f.render(text, True, text_col)
+    screen.blit(img, (x, y))
+
+
 # create sprite groups
 spaceship_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
@@ -54,28 +60,44 @@ while run:
     # draw background
     draw_bg()
 
-    # create random alien bullets
-    # record current time
-    time_now = pygame.time.get_ticks()
-    # shoot
-    if time_now - last_alien_shot > bullet_cooldown and len(alien_group) > 0:
-        attacking_alien = random.choice(alien_group.sprites())
-        alien_bullet = AlienBullet(attacking_alien.rect.centerx, attacking_alien.rect.bottom)
-        alien_bullet_group.add(alien_bullet)
-        last_alien_shot = pygame.time.get_ticks()
+    if countdown == 0:
 
-    # event handlers
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+        # create random alien bullets
+        # record current time
+        time_now = pygame.time.get_ticks()
+        # shoot
+        if time_now - last_alien_shot > bullet_cooldown and len(alien_group) > 0:
+            attacking_alien = random.choice(alien_group.sprites())
+            alien_bullet = AlienBullet(attacking_alien.rect.centerx, attacking_alien.rect.bottom)
+            alien_bullet_group.add(alien_bullet)
+            last_alien_shot = pygame.time.get_ticks()
 
-    # update spaceship
-    spaceship.update(screen, bullet_group, explosion_group)
+        # check if all the aliens have been killed
+        if len(alien_group) == 0:
+            game_over = 1
 
-    # update sprite groups
-    bullet_group.update(alien_group, explosion_group)
-    alien_group.update()
-    alien_bullet_group.update(spaceship_group, spaceship, explosion_group)
+        if game_over == 0:
+            # update spaceship
+            game_over = spaceship.update(screen, bullet_group, explosion_group)
+
+            # update sprite groups
+            bullet_group.update(alien_group, explosion_group)
+            alien_group.update()
+            alien_bullet_group.update(spaceship_group, spaceship, explosion_group)
+        else:
+            if game_over == -1:
+                draw_text('GAME OVER!', font_40, white, int(screen_width / 2 - 100), int(screen_height / 2 + 50))
+
+            elif game_over == 1:
+                draw_text('YOU WIN!', font_40, white, int(screen_width / 2 - 100), int(screen_height / 2 + 50))
+
+    if countdown > 0:
+        draw_text('GET READY!', font_40, white, int(screen_width / 2 - 100), int(screen_height / 2 + 50))
+        draw_text(str(countdown), font_40, white, int(screen_width / 2 - 10), int(screen_height / 2 + 100))
+        count_timer = pygame.time.get_ticks()
+        if count_timer - last_count > 1000:
+            countdown -= 1
+            last_count = pygame.time.get_ticks()
     explosion_group.update()
 
     # draw sprite groups
@@ -83,7 +105,13 @@ while run:
     bullet_group.draw(screen)
     alien_group.draw(screen)
     alien_bullet_group.draw(screen)
+    # update explosion group
     explosion_group.draw(screen)
+
+    # event handlers
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
 
     # update display
     pygame.display.update()

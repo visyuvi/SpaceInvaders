@@ -13,6 +13,7 @@ class Aliens(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.move_direction
+        self.rect.y += self.move_direction
         self.move_counter += 1
         if abs(self.move_counter) > 75:
             self.move_direction *= -1

@@ -19,10 +19,9 @@ class Spaceship(pygame.sprite.Sprite):
     def update(self, screen, bullet_group, explosion_group):
         # set movement speed
         speed = 8
-
         # set cooldown variable
         cooldown = 200  # in milliseconds
-
+        gameover = 0
         # get key press
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and self.rect.left > 0:
@@ -48,4 +47,8 @@ class Spaceship(pygame.sprite.Sprite):
         elif self.health_remaining <= 0:
             explosion = Explosion(self.rect.centerx, self.rect.centery, 3)
             explosion_group.add(explosion)
+            gameover = -1
             self.kill()
+            return gameover
+
+        return gameover
